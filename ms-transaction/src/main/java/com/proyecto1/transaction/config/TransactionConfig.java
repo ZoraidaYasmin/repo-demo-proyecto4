@@ -6,11 +6,13 @@ import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4
 import org.springframework.cloud.client.circuitbreaker.Customizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 
 @Configuration
+@EnableKafka
 public class TransactionConfig {
     @Bean
     public Customizer<ReactiveResilience4JCircuitBreakerFactory> customerCustomizer(){
@@ -20,4 +22,6 @@ public class TransactionConfig {
                     .circuitBreakerConfig(CircuitBreakerConfig.ofDefaults()),"ms-customers-client");
         };
     };
+    
+    
 }
