@@ -1,4 +1,4 @@
-package com.project4.app.entity;
+package com.proyecto1.transaction.entity;
 
 import java.math.BigDecimal;
 

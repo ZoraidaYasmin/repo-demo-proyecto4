@@ -58,7 +58,17 @@ public class VirtualWalletController {
 
     @PostMapping("/pay")
     public ResponseEntity<VirtualWalletEvent> payVirtualWallet(@RequestBody VirtualWalletEvent vw) throws JsonProcessingException{
-    	vwProducer.sendVirtualWalletEvent(vw);
+    	if (vw.getCardNumberEmisor() != null || vw.getCardNumberReceptor() != null) {
+    		vwProducer.sendVirtualWalletEvent(vw);
+    	}else {
+    		VirtualWallet vwT = new VirtualWallet();
+    		vwT.setAmount(vw.getAmount());
+    		vwT.setCellphone(vw.getCellphone());
+    		vwT.setDni(vw.getDni());
+    		vwT.setOperation(vw.getOperation());
+    		vwService.create(vwT);
+    	}
+    	
         return ResponseEntity.status(HttpStatus.CREATED).body(vw);
     }
 }

@@ -2,6 +2,7 @@ package com.proyecto1.transaction.entity;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DebitCard {
 	
+	@Id
 	private String id;
 	private String cardNumber;
 	
@@ -26,6 +28,12 @@ public class DebitCard {
     
     @Transient
     private Product product;
+    
+    @Transient
+    private List<Transaction> transaction;
+    
+    @Transient
+    private Transaction trans;
 
     @Transient
     private List<Deposit> deposit;

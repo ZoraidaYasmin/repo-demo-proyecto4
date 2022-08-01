@@ -37,7 +37,8 @@ public class VirtualWalletServiceImpl implements VirtualWalletService {
         return vwRepository.findById(id)
                 .map( x -> {
                     x.setAmount(x.getAmount());
-                    x.setCardNumber(x.getCardNumber());
+                    x.setCardNumberEmisor(x.getCardNumberEmisor());
+                    x.setCardNumberReceptor(x.getCardNumberReceptor());
                     x.setCellphone(x.getCellphone());
                     x.setDni(x.getDni());
                     x.setOperation(x.getOperation());

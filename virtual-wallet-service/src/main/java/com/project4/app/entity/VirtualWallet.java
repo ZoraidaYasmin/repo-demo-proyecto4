@@ -23,6 +23,7 @@ public class VirtualWallet {
 	private String cellphone;
 	private String operation;
 	private BigDecimal amount;
-	private String cardNumber;
+	private String cardNumberEmisor;
+	private String cardNumberReceptor;
 	private Integer virtualWalletId;
 }
