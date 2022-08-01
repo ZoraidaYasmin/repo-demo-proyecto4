@@ -20,7 +20,7 @@ spring:
     consumer:
       bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
       key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
-      value-deserealizer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: virtual-wallet-listener-group
 eureka:
   client:
