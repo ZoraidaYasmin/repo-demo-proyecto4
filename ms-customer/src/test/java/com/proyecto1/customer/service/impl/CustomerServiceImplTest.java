@@ -20,9 +20,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -59,10 +61,10 @@ public class CustomerServiceImplTest {
     @Mock
     private DepositClient depositClient;
 
+    static Customer customerOk = new Customer();
+
     @InjectMocks
     private CustomerServiceImpl customerServiceImpl;
-
-
     @Test
     void summaryCustomerByProduct(){
         Customer customer = Customer.builder()
@@ -147,10 +149,19 @@ public class CustomerServiceImplTest {
         Mockito.when(signatoryClient.getSignatory()).thenReturn(Flux.just(signatory));
 
 
-        assertDoesNotThrow(() -> customerServiceImpl.summaryCustomerByProduct()
+        /*assertDoesNotThrow(() -> customerServiceImpl.summaryCustomerByProduct()
                 .subscribe(response -> {
                     assertEquals(transactionMono.getAccountNumber(), response.getAccountNumber());
-                }));
+                }));*/
+
+
+        Flux<Transaction> result = customerServiceImpl.summaryCustomerByProduct();
+
+        StepVerifier.create(result)
+                .assertNext(r -> {
+                    assertEquals(transactionMono.getAccountNumber(), r.getAccountNumber());
+                })
+                .verifyComplete();
     }
     @Test
     void createCustomerTest() {

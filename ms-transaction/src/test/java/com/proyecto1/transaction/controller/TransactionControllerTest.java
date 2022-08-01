@@ -19,11 +19,13 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 
 @ExtendWith(SpringExtension.class)
@@ -105,7 +107,7 @@ public class TransactionControllerTest {
                 .jsonPath("$.availableBalance").isEqualTo(BigDecimal.valueOf(20))
                 .jsonPath("$.maintenanceCommission").isEqualTo(BigDecimal.valueOf(5.00))
                 .jsonPath("$.cardNumber").isEqualTo("2347823482742934")
-                .jsonPath("$.retirementDateFixedTerm").isEqualTo("2022-07-26")
+                .jsonPath("$.retirementDateFixedTerm").isEqualTo("2022-08-01")
                 .jsonPath("$.customer").isEqualTo(new Customer())
                 .jsonPath("$.product").isEqualTo(new Product());
 
@@ -145,7 +147,6 @@ public class TransactionControllerTest {
                 .expectStatus().isOk();
 
         Mockito.verify(transactionService,times(1)).delete(id);
-
     }
 
     @Test
@@ -174,6 +175,7 @@ public class TransactionControllerTest {
                 .body(Mono.just(transactionMono), Transaction.class)
                 .exchange()
                 .expectStatus().isOk();
+
         Mockito.verify(transactionService,times(1)).update(transactionMono,id);
     }
 
@@ -246,7 +248,7 @@ public class TransactionControllerTest {
                 .jsonPath("$.availableBalance").isEqualTo(BigDecimal.valueOf(20))
                 .jsonPath("$.maintenanceCommission").isEqualTo(BigDecimal.valueOf(5.00))
                 .jsonPath("$.cardNumber").isEqualTo("2347823482742934")
-                .jsonPath("$.retirementDateFixedTerm").isEqualTo("2022-07-26")
+                .jsonPath("$.retirementDateFixedTerm").isEqualTo("2022-08-01")
                 .jsonPath("$.customer").isEqualTo(new Customer())
                 .jsonPath("$.product").isEqualTo(new Product());
 
@@ -254,7 +256,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-     void createWithDrawalTest() {
+     void createTest() {
         Transaction transactionMono = Transaction.builder()
                 .id(ObjectId.get().toString())
                 .customerId("23424242345fdd")

@@ -228,7 +228,7 @@ public class TransacionServiceImpl implements TransactionService {
     @Override
     public Mono<Transaction> delete(String id) {
         log.info("Method call Delete - transaction");
-        return transactionRepository.findById(id).flatMap( x -> transactionRepository.delete(x).then(Mono.just(new Transaction())));
+        return transactionRepository.findById(id).flatMap( x -> transactionRepository.delete(x).then(Mono.just(Transaction.builder().id(id).build())));
     }
 
     @Override

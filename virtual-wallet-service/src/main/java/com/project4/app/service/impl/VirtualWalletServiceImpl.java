@@ -47,8 +47,9 @@ public class VirtualWalletServiceImpl implements VirtualWalletService {
 	}
 
 	@Override
-	public Mono<Void> delete(String id) {
-		return vwRepository.deleteById(id);
+	public Mono<VirtualWallet> delete(String id) {
+
+		return vwRepository.findById(id).flatMap( x -> vwRepository.delete(x).then(Mono.just(VirtualWallet.builder().id(id).build())));
 	}
 	
 }

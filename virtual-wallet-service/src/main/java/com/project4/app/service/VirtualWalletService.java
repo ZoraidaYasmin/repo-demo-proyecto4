@@ -15,5 +15,5 @@ public interface VirtualWalletService {
 
     Mono<VirtualWallet> update(VirtualWallet virtualWallet, String id);
 
-    Mono<Void> delete(String id);
+    Mono<VirtualWallet> delete(String id);
 }

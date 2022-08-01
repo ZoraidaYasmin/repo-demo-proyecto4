@@ -52,7 +52,7 @@ public class VirtualWalletController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public Mono<Void> deleteVirtualWallet(@PathVariable String id){
+    public Mono<VirtualWallet> deleteVirtualWallet(@PathVariable String id){
         return vwService.delete(id);
     }
 
