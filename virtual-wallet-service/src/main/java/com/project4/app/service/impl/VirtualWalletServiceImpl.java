@@ -67,7 +67,7 @@ public class VirtualWalletServiceImpl implements VirtualWalletService {
 	@Override
 	@CacheEvict(cacheNames = CacheConfig.WALLET_CACHE, key = "#id")
 	public Mono<Void> delete(String id) {
-		return vwRepository.deleteById(id);
+		return vwRepository.findById(id).flatMap( x -> vwRepository.delete(x).then(Mono.just(VirtualWallet.builder().id(id).build())));
 	}
 	
 }
